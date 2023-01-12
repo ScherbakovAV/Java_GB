@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -60,6 +61,13 @@ public class Main {
         }
 
         print("+-+".repeat(12));
+
+
+        Scanner scanner = new Scanner((System.in));
+
+        String newString = scanner.nextLine();
+
+        print(newString);
     }
 
     private static void print(String str) {
