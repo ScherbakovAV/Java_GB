@@ -12,31 +12,23 @@ import java.util.Random;
 public class Homework1 {
     public static void main(String[] args) {
         int max_rand = 2000;
-        int i = rand(max_rand);
+        int i = new Random().nextInt(max_rand + 1);
         System.out.println("Случайное число в диапазоне от 0 до " + max_rand + ": " + i);
 
-        String bin_i = Integer.toBinaryString(i);
-        System.out.println(i + " в двоичном виде: " + bin_i);
+        System.out.println(i + " в двоичном виде: " + Integer.toBinaryString(i));
 
         int n = head_bit_find(i);
         System.out.println("Номер старшего значащего бита выпавшего числа: " + n);
 
-        int max = Short.MAX_VALUE;
-        int min = Short.MIN_VALUE;
+        int[] m1 = multi_find(n, i, Short.MAX_VALUE, true);
+        System.out.println("Кратные " + n + " числа в диапазоне от " + i + " до " + Short.MAX_VALUE + ":");
+        arr_print(m1);
 
-        int[] m1 = multi_find(n, i, max);
-        System.out.println("Кратные " + n + " числа в диапазоне от " + i + " до " + max + ":");
-        //arr_print(m1);
-
-        int[] m2 = non_multi_find(n, min, i);
-        System.out.println("Некратные " + n + " числа в диапазоне от " + min + " до " + i + ":");
-        //arr_print(m2);
+        int[] m2 = multi_find(n, Short.MIN_VALUE, i, false);
+        System.out.println("Некратные " + n + " числа в диапазоне от " + Short.MIN_VALUE + " до " + i + ":");
+        arr_print(m2);
     }
-    public static int rand(int max) {
-        int rand_number = new Random().nextInt(max + 1);
-        return rand_number;
-    }
-    public static int head_bit_find(int numb) {
+    private static int head_bit_find(int numb) {
         int count = 1;
         while (numb > 1) {
             numb >>= 1;
@@ -44,47 +36,39 @@ public class Homework1 {
         }
         return count;
     }
-    public static int[] multi_find(int num, int start_num, int last_num) {
+    private static int[] multi_find(int num, int start_num, int last_num, boolean isMult) {
         int len = 0;
-        for (int d = start_num; d <= last_num; d++) {
-            if (d % num == 0) {
-                len++;
+        for (int j = start_num; j <= last_num; j++) {
+            if (isMult) {
+                if (j % num == 0) len++;
+            }
+            if (!isMult) {
+                if (j % num != 0) len++;
             }
         }
 
-        int[] arr1 = new int[len];
+        int[] arr = new int[len];
 
         int count = 0;
-        for (int k = start_num; k <= last_num; k++) {
-            if (k % num == 0) {
-                arr1[count] = k;
-                count++;
+        for (int j = start_num; j <= last_num; j++) {
+            if (isMult) {
+                if (j % num == 0) {
+                    arr[count] = j;
+                    count++;
+                }
+            }
+            if (!isMult) {
+                if (j % num != 0) {
+                    arr[count] = j;
+                    count++;
+                }
             }
         }
-        return arr1;
+        return arr;
     }
-    public static int[] non_multi_find(int num, int start_num, int last_num) {
-        int len = 0;
-        for (int d = start_num; d <= last_num; d++) {
-            if (d % num != 0) {
-                len++;
-            }
-        }
-
-        int[] arr2 = new int[len];
-
-        int count = 0;
-        for (int k = start_num; k <= last_num; k++) {
-            if (k % num != 0) {
-                arr2[count] = k;
-                count++;
-            }
-        }
-        return arr2;
-    }
-    public static void arr_print(int[] arr) {
-        for (int j = 0; j < arr.length; j++) {
-            System.out.print(arr[j] + " ");
+    private static void arr_print(int[] arr) {
+        for (int i : arr) {
+            System.out.print(i + " ");
         }
         System.out.println();
     }
