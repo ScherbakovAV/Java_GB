@@ -8,40 +8,55 @@
 7** Сравнить время выполнения пунка 6 со строкой содержащей 10000 символов "=" средствами String и StringBuilder.*/
 public class Homework2 {
     public static void main(String[] args) {
-        findInStr("Обезьяна", "ян");
-        findInStr("Обезьяна", "кис");
-        isReverse("привет", "тевирп");
-        isReverse("привет", "тевп");
+        String word = "иллюзионист";
+        findInStr(word, "юзио");
+        findInStr(word, "лио");
+        isReverse(word, "тсиноизюлли");
+        isReverse(word, "тсизюлли");
+        System.out.printf("(3) %s -> %s\n", word, reverseStr(word));
         createStrSolutionsFromInts(50, 15);
+        StrVSStrbuilderTimes();
     }
     private static void findInStr(String str1, String str2) { // Ex. 1
-        if (str1.contains(str2)) System.out.printf("В данной строке содержится \"%s\"\n", str2);
-        else System.out.printf("В данной строке НЕ содержится \"%s\"\n", str2);
+        if (str1.contains(str2)) System.out.printf("(1) В строке \"%s\" содержится \"%s\"\n", str1, str2);
+        else System.out.printf("(1) В строке \"%s\" НЕ содержится \"%s\"\n", str1, str2);
     }
     private static void isReverse(String str1, String str2) { // Ex. 2
-        if (str1.matches(new StringBuilder(str2).reverse().toString())) System.out.println("Данные строки являются вращением друг друга");
-        else System.out.println("Данные строки НЕ являются вращением друг друга");
+        if (str1.matches(new StringBuilder(str2).reverse().toString())) System.out.printf("(2) Cтроки \"%s\" и \"%s\" являются вращением друг друга\n", str1, str2);
+        else System.out.printf("(2) Cтроки \"%s\" и \"%s\" НЕ являются вращением друг друга\n", str1, str2);
     }
-//    private static String reverseStr(String str) {
-//        char[] strReversed = str.toCharArray();
-//        int count = str.length() - 1;
-//         str.charAt(count);
-//        if (count == 0) return strReversed;
-//        else {
-//            strReversed += reverseStr(str);
-//        }
-//        return null;
-//    }
+    private static String reverseStr(String str) { //Ex. 3
+        if (str.length() <= 1) {
+            return str;
+        }
+        return reverseStr(str.substring(1)) + str.charAt(0);
+    }
     private static void createStrSolutionsFromInts(int num1, int num2) { // Ex. 4, 5, 6
         StringBuilder str1 = new StringBuilder().append(num1).append(" + ").append(num2).append(" = ").append(num1 + num2);
-        System.out.println(str1);
+        System.out.println("(4) " + str1);
         StringBuilder str2 = new StringBuilder().append(num1).append(" - ").append(num2).append(" = ").append(num1 - num2);
-        System.out.println(str2);
+        System.out.println("(4) " + str2);
+        StringBuilder str3 = new StringBuilder().append(num1).append(" * ").append(num2).append(" = ").append(num1 * num2);
+        System.out.println("(4) " + str3);
         int equalIndex = str2.indexOf("=");
         str2.deleteCharAt(equalIndex).insert(equalIndex, "равно");
-        System.out.println(str2);
-        StringBuilder str3 = new StringBuilder().append(num1).append(" * ").append(num2).append(" = ").append(num1 * num2);
-        System.out.println(str3);
-        System.out.println(str3.replace(str3.indexOf("="), str3.indexOf("=") + 1, "равно"));
+        System.out.println("(5) " + str2);
+        System.out.println("(6) " + str3.replace(str3.indexOf("="), str3.indexOf("=") + 1, "равно"));
+    }
+    private static void StrVSStrbuilderTimes() { // Ex. 7
+        String str = "=".repeat(10000);
+        double begin = System.currentTimeMillis();
+        str.replaceAll("=", "равно");
+        System.out.println("(7) Время выполнения замены в строке \"=\" на \"равно\" средствами String: " + (System.currentTimeMillis() - begin));
+
+        begin = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder("=".repeat(10000));
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '=') {
+                sb.deleteCharAt(i);
+                sb.insert(i, "равно");
+            }
+        }
+        System.out.println("(7) Время выполнения замены в строке \"=\" на \"равно\" средствами StringBuilder: " + (System.currentTimeMillis() - begin));
     }
 }
