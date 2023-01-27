@@ -9,7 +9,6 @@ public class Theory {
 
         ArrayList<String> tmp = new ArrayList<>(family); // копия списка
         Collections.sort(tmp);
-        Collections.sort(family);
 
         for (int i = 0; i < tmp.size(); i++) {
             int j = family.indexOf(tmp.get(i));
@@ -44,8 +43,8 @@ public class Theory {
         System.out.println(eSet); // все пары ключ-значение
 
         for (int i = 0; i < keySet.size(); i++) {
-            // чтобы получить доступ к элементам map, в них нет последовательности,
-            // надо работать через ключи, используя keySet
+            // Чтобы получить доступ к элементам map, надо работать через ключи,
+            // используя keySet, т.к. в них нет последовательности
             System.out.println(hashMap.get(keySet.toArray()[i]));
         }
 
