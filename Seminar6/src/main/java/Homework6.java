@@ -30,7 +30,7 @@ public class Homework6 {
             Object[] keyMap = hashMap.keySet().toArray();
             System.out.println("введённые числа без повторений:");
             for (Object el : keyMap) {
-                System.out.print((Integer) el + " ");
+                System.out.print(el + " ");
             }
         }
         else System.out.println("Список пуст...");
